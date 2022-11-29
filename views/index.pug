@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div(class='header') 
+    h1= title
+    if user
+        .user 
+        h2(class='greeting') Hello 
+          a(href=user.url) #{user.username}   
+          img(src=user.image class='small')
+        form(action='/logout', method='POST')
+          button(type='submit',class='minus') Logout
+        a(href='./feed') Feed
+    
+  div(class='board')
+     h2 #{title}
+     if posts
+      each post in posts
+          .card
+            h3 
+              a(href=post.url) #{post.title}
+            p #{post.text}
+            .footer 
+                p Like: #{post.count_likes}
+                p #{post.created_formatted}
+                p Posted by 
+                  a(href=post.user.url) #{post.user.username}
+                img(src=post.user.image class='small')
+  form(action='/newpost', class='newpost' method='POST')
+      input(type='text', id='title', name='title' placeholder='title..')
+      textarea(class='post' id='text' name='text' placeholder='Post new message...')
+      button(type='submit',class='plus') Post

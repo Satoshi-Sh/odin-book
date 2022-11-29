@@ -1,0 +1,24 @@
+extends layout.pug
+
+block content
+  h2= title
+
+  if errors  
+    each error in errors 
+       li(class='error') #{error.msg}
+
+  form.form(action='', method='post')
+    p *If you have an account 
+      a(href='./login') Login
+      
+    div
+      label(for='username' ,class='label') Username:
+      input(type='text', class='signlogin', id='username', name='username')
+    div
+      label(for='password',class='label') Password:
+      input(type='password', class='signlogin', id='password', name='password')
+    div
+      label(for='confirmation', class='label') Confirm Password:
+      input(type='password', class='signlogin', id='confirmation', name='confirmation')
+      br
+    button(class='plus',type='submit') Signup

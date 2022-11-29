@@ -1,0 +1,20 @@
+extends layout.pug
+
+block content
+  h2= title
+
+  if messages.error 
+    p(class='error') #{messages.error}
+
+  form.form(action='', method='post')
+    p *If you do not have an account 
+      a(href='./signup') Signup
+      
+    div
+      label(for='username' ,class='label') Username:
+      input(type='text', class='signlogin', id='username', name='username')
+    div
+      label(for='password',class='label') Password:
+      input(type='password', class='signlogin', id='password', name='password')
+      br
+    button(class='plus',type='submit') Login

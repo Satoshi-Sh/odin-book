@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  div(class='header') 
+    h1= title
+    if user
+        .user 
+        h2 Hello 
+           a(href=user.url) #{user.username}
+        img(src=user.image class='small')
+        form(action='/logout', method='POST')
+          button(type='submit',class='minus') Logout
+        a(href=`/user/${user._id}`) Back
+  h3 Upload Profile Image      
+  form(action='', class='newpost' method='POST' enctype="multipart/form-data")
+      input(type='file' id='image' name='image',accept="image/png, image/jpeg, image/jpg")
+      button(type='submit',class='plus') Post

@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  div(class='header') 
+    h1= title
+    if user
+        .user 
+        h2(class='greeting') Hello #{user.username}
+          img(src=user.image class='small')
+        form(action='/logout', method='POST')
+          button(type='submit',class='minus') Logout
+        a(href='/') All Posts
+        a(href='/feed') Feed
+    
+  div(class='board')
+     if userdetail
+        h2(class='greeting2') #{userdetail.username} 
+          img(src=userdetail.image class='large')
+        if (userdetail.profile.length>0)
+          p(class='profile') #{userdetail.profile} 
+        else 
+          p profile section... 
+        p #{userdetail.created_formatted}
+     if isYou
+       .update
+         a(href=`./${user._id}/update`) Update Profile
+         a(href=`./${user._id}/image`) Upload Image
+     else 
+        if isFollow 
+           form(action=`./${userdetail._id}/unfollow` id='follow' class='newpost' method='POST')
+            button(type='submit',class='minus') Unfollow
+        else
+           form(action=`./${userdetail._id}/follow` id='follow' class='newpost' method='POST')
+             button(type='submit',class='like') Follow
+  div(class='board')
+     h2 All Posts by #{userdetail.username}
+     if posts
+      each post in posts
+          .card
+            h3 
+              a(href=post.url) #{post.title}
+            p #{post.text}
+            .footer 
+                p Like: #{post.count_likes}
+                p #{post.created_formatted}
+                p Posted by  #{post.user.username}
+                img(src=post.user.image class='small')
+     else 
+       p No posts yet..
+                

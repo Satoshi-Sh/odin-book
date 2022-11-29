@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  div(class='header') 
+    h1= title
+    if user
+        .user 
+        h2(class='greeting') Hello 
+          a(href=user.url) #{user.username}
+          img(src=user.image class='small')
+        form(action='/logout', method='POST')
+          button(type='submit',class='minus') Logout
+        a(href='/') All Posts
+        a(href='/feed') Feed
+    
+  div(class='board')
+     h2 Post Detail
+     .card
+        h3 #{post.title}
+        p #{post.text}
+        .footer 
+           p #{post.created_formatted}
+           p Posted by 
+             a(href=post.user.url) #{post.user.username}
+           img(src=post.user.image class='small')
+  div(class='board')
+     h2 Comments
+     if comments.length>0
+      each comment in comments
+          .card
+            h3 
+            p #{comment.text}
+            .footer 
+                p #{comment.date_formatted}
+                p Posted by 
+                  a(href=comment.user.url) #{comment.user.username}
+                img(src=comment.user.image class='small')
+     else 
+        p No comment yet.
+     h2 Likes 
+     if post.names_likes.length >0 
+        each like in post.likes 
+             li #{like.username} 
+     else 
+           li No likes yet...
+     
+  form(action='', class='newpost' method='POST')
+      textarea(class='post' id='text' name='text' placeholder='Post new comment...')
+      button(type='submit',class='plus') Post
+  if !liked
+    form(action=`./${post._id}/like`,class='newpost' method='POST')
+        button(type='submit',class='like') Like
+  else 
+    form(action=`./${post._id}/dislike`,class='newpost' method='POST')
+        button(type='submit',class='minus') Dislike

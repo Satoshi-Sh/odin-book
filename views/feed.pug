@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  div(class='header') 
+    h1= title
+    if user
+        .user 
+        h2(class='greeting') Hello 
+             a(href=user.url) #{user.username}   
+             img(src=user.image class='small')
+        form(action='/logout', method='POST')
+          button(type='submit',class='minus') Logout
+        a(href='/') All Posts
+    
+  div(class='board')
+     h2 #{title}
+     if posts.length>0
+      each post in posts
+          .card
+            h3 
+              a(href=post.url) #{post.title}
+            p #{post.text}
+            .footer 
+                p Like: #{post.count_likes}
+                p #{post.created_formatted}
+                p Posted by 
+                  a(href=post.user.url) #{post.user.username}   
+                img(src=post.user.image class='small')
+     else 
+       p No follow yet..

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div(class='header') 
+    h1= title
+    if user
+        .user 
+        h2 Hello #{user.username}
+        img(src=user.image class='small')
+        form(action='/logout', method='POST')
+          button(type='submit',class='minus') Logout
+        a(href=`/user/${user._id}`) Back
+  h3 Update #{user.username}      
+  form(action='', class='newpost' method='POST')
+      textarea(class='post' id='profile' name='profile' placeholder='New profile...') #{user.profile}
+      button(type='submit',class='plus') Post
